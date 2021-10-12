@@ -4,12 +4,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @Entity
 @Table(name = "person")
@@ -19,20 +23,22 @@ public class Person implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	@Column(name = "id", unique = true, nullable = false)
+	private Long id;
 	private String name;
 	private String surname;
 	private String cpf;
 	private String birthday;
 
 	@OneToMany(mappedBy = "person")
+	@Cascade({CascadeType.REMOVE})
 	private List<Contact> contacts = new ArrayList<>();
 
 	public Person() {
 		super();
 	}
 
-	public Person(Integer id, String name, String surname, String cpf, String birthday) {
+	public Person(Long id, String name, String surname, String cpf, String birthday) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -46,7 +52,7 @@ public class Person implements Serializable {
 	}
 
 	public void setId(long id) {
-		this.id = (int) id;
+		this.id = (Long) id;
 	}
 
 	public String getName() {

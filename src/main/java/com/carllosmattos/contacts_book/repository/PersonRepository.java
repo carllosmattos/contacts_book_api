@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.callosmattos.contacts_book.models.Person;
 
 @Repository
-public interface PersonRepository extends CrudRepository<Person, Integer> {
+public interface PersonRepository extends CrudRepository<Person, Long> {
 
 }
