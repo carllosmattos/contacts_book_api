@@ -48,4 +48,9 @@ public class ContactService {
 		obj.setPerson(ps);
 		return repository.save(obj);
 	}
+
+	public void delete(Long id) {
+		Contact obj = findById(id);
+		repository.delete(obj);
+	}
 }
