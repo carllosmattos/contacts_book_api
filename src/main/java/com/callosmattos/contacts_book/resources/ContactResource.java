@@ -1,5 +1,6 @@
 package com.callosmattos.contacts_book.resources;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,11 +9,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.callosmattos.contacts_book.dtos.ContactDTO;
 import com.callosmattos.contacts_book.models.Contact;
@@ -48,5 +51,12 @@ public class ContactResource {
 	public ResponseEntity<Contact> updatePatch(@PathVariable Long id, @RequestBody Contact obj) {
 		Contact newObj = service.update(id, obj);
 		return ResponseEntity.ok().body(newObj);
+	}
+	
+	@PostMapping
+	public ResponseEntity<Contact> create(@RequestParam(value = "person", defaultValue = "0") Long person_id, @RequestBody Contact obj) {
+		Contact newObj = service.create(person_id, obj);
+		URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/contacts/{id}").buildAndExpand(newObj.getId()).toUri();
+		return ResponseEntity.created(uri).build();
 	}
 }

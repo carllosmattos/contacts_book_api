@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.callosmattos.contacts_book.models.Contact;
+import com.callosmattos.contacts_book.models.Person;
 import com.callosmattos.contacts_book.services.exceptions.ObjectNotFoundException;
 import com.carllosmattos.contacts_book.repository.ContactRepository;
 
@@ -39,5 +40,12 @@ public class ContactService {
 	private void updateData(Contact newObj, Contact obj) {
 		newObj.setValor(obj.getValor());
 		newObj.setTipo_contato(obj.getTipo_contato());
+	}
+
+	public Contact create(Long person_id, Contact obj) {
+		obj.setId(null);
+		Person ps = personService.findById(person_id);
+		obj.setPerson(ps);
+		return repository.save(obj);
 	}
 }
