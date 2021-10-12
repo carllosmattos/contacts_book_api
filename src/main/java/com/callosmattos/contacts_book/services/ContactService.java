@@ -29,4 +29,15 @@ public class ContactService {
 		personService.findById(person_id);
 		return repository.findAllByPerson(person_id);
 	}
+
+	public Contact update(Long id, Contact obj) {
+		Contact newObj = findById(id);
+		updateData(newObj, obj);
+		return repository.save(newObj);
+	}
+
+	private void updateData(Contact newObj, Contact obj) {
+		newObj.setValor(obj.getValor());
+		newObj.setTipo_contato(obj.getTipo_contato());
+	}
 }
