@@ -24,4 +24,9 @@ public class PersonService {
 	public List<Person> findAll() {
 		return (List<Person>) repository.findAll();
 	}
+	
+	public Person create (Person obj) {
+		obj.setId(0);
+		return repository.save(obj);
+	}
 }
