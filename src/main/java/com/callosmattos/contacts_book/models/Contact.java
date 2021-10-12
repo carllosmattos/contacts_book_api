@@ -24,7 +24,7 @@ public class Contact implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private Integer id;
+	private Long id;
 	
 	@Column(name = "valor")
 	private String valor;
@@ -42,7 +42,7 @@ public class Contact implements Serializable {
 		super();
 	}
 
-	public Contact(Integer id, String valor, ContactType tipo_contato, Person person) {
+	public Contact(Long id, String valor, ContactType tipo_contato, Person person) {
 		super();
 		this.id = id;
 		this.valor = valor;
@@ -50,11 +50,11 @@ public class Contact implements Serializable {
 		this.person = person;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
