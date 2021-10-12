@@ -1,5 +1,6 @@
 package com.callosmattos.contacts_book.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,5 +19,9 @@ public class PersonService {
 		Optional<Person> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Person.class.getName()));
+	}
+	
+	public List<Person> findAll() {
+		return (List<Person>) repository.findAll();
 	}
 }
