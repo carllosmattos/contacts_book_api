@@ -1,8 +1,8 @@
 package com.callosmattos.contacts_book.services.exceptions;
 
 public class EnumValidationException extends Exception {
-
-    private String enumValue = null;
+	private static final long serialVersionUID = 1L;
+	private String enumValue = null;
     private String enumName = null;
 
     public String getEnumValue() {
