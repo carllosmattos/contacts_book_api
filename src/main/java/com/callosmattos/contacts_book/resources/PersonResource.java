@@ -4,9 +4,12 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +24,7 @@ import com.callosmattos.contacts_book.dtos.PersonDTO;
 import com.callosmattos.contacts_book.models.Person;
 import com.callosmattos.contacts_book.services.PersonService;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping(value="/persons")
 public class PersonResource {
@@ -42,14 +46,14 @@ public class PersonResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Person> create(@RequestBody Person obj) {
+	public ResponseEntity<Person> create(@Valid @RequestBody Person obj) {
 		obj = service.create(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<PersonDTO> update(@PathVariable Long id, @RequestBody PersonDTO objDto) {
+	public ResponseEntity<PersonDTO> update(@Valid @PathVariable Long id, @RequestBody PersonDTO objDto) {
 		Person newObj = service.update(id, objDto);
 		return ResponseEntity.ok().body(new PersonDTO(newObj));
 	}

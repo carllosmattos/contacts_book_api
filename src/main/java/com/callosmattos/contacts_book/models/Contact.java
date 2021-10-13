@@ -12,6 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -26,11 +30,14 @@ public class Contact implements Serializable {
 	@Column(name = "id")
 	private Long id;
 	
+	@NotEmpty(message = "Campo Valor é requerido!")
+	@Length(min = 11, max = 100, message = "O campo Valor deve ter entre 11 e 100 caracteres!")
 	@Column(name = "valor")
 	private String valor;
 	
 	@Enumerated(value = EnumType.STRING)
 	@Column(name = "tipo_contato")
+	@NotNull
 	private ContactType tipo_contato;
 
 	@JsonIgnore

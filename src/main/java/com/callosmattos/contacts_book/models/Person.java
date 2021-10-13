@@ -11,9 +11,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
+import javax.validation.constraints.NotEmpty;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Table(name = "person")
@@ -25,9 +26,21 @@ public class Person implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
 	private Long id;
+	
+	@NotEmpty(message = "Campo Nome é requerido!")
+	@Length(min = 3, max = 100, message = "O campo Nome deve ter entre 3 e 100 caracteres!")
 	private String name;
+	
+	@NotEmpty(message = "Campo Sobrenome é requerido!")
+	@Length(min = 3, max = 100, message = "O campo Sobrenome deve ter entre 3 e 100 caracteres!")
 	private String surname;
+	
+	@NotEmpty(message = "Campo CPF é requerido!")
+	@Length(min = 11, max = 11, message = "O campo CPF deve ter 11 caracteres!")
 	private String cpf;
+	
+	@NotEmpty(message = "Campo Data é requerido!")
+	@Length(min = 10, max = 10, message = "O campo Data deve ter 11 caracteres!")
 	private String birthday;
 
 	@OneToMany(mappedBy = "person")

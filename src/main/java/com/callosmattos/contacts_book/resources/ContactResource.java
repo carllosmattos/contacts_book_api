@@ -4,8 +4,11 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -22,6 +25,7 @@ import com.callosmattos.contacts_book.dtos.ContactDTO;
 import com.callosmattos.contacts_book.models.Contact;
 import com.callosmattos.contacts_book.services.ContactService;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping(value = "/contacts")
 public class ContactResource {
@@ -43,19 +47,19 @@ public class ContactResource {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Contact> update(@PathVariable Long id, @RequestBody Contact obj) {
+	public ResponseEntity<Contact> update(@PathVariable Long id, @Valid @RequestBody Contact obj) {
 		Contact newObj = service.update(id, obj);
 		return ResponseEntity.ok().body(newObj);
 	}
 	
 	@PatchMapping(value = "/{id}")
-	public ResponseEntity<Contact> updatePatch(@PathVariable Long id, @RequestBody Contact obj) {
+	public ResponseEntity<Contact> updatePatch(@PathVariable Long id, @Valid @RequestBody Contact obj) {
 		Contact newObj = service.update(id, obj);
 		return ResponseEntity.ok().body(newObj);
 	}
 	
 	@PostMapping
-	public ResponseEntity<Contact> create(@RequestParam(value = "person", defaultValue = "0") Long person_id, @RequestBody Contact obj) {
+	public ResponseEntity<Contact> create(@RequestParam(value = "person", defaultValue = "0") Long person_id, @Valid @RequestBody Contact obj) {
 		Contact newObj = service.create(person_id, obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/contacts/{id}").buildAndExpand(newObj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
